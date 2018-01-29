@@ -14,7 +14,7 @@ app.post('/todo',(req,res)=>{
   todo.save().then((result)=>{
     res.send(result);
   }).catch((e)=>{
-    res.status(200).send(e);
+    res.status(400).send(e);
   })
 })
 

@@ -41,4 +41,21 @@ const {Todo} = require('./../models/todo.js');
 
 
     })
+    it('not to createi',(done)=>{
+      request(app)
+        .post('/todo')
+        .send({})
+        .expect(400)
+        .end((err,res)=>{
+          if(err){
+            return done(err);
+          }
+
+          Todo.find().then((result)=>{
+            expect(result.length).toBe(1);
+            done();
+          })
+        })
+    })
+
  })
