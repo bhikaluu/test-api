@@ -1,11 +1,14 @@
 const bodyParse = require('body-parser')
 const express = require('express');
+const {ObjectID} = require('mongodb');
 
 const {mongoose} = require('./db/mongoose.js');
 const {Todo} = require('./models/todo.js');
 const {User} = require('./models/user.js');
 
 var app = express();
+
+const port = process.argv.PORT||3000;
 app.use(bodyParse.json());
 app.post('/todos',(req,res)=>{
   var todo =new Todo({
@@ -23,6 +26,22 @@ app.get('/todos',(req,res)=>{
   }).catch((err)=>{
     res.status(400).send(err);
   })
+})
+
+app.delete('/todos/:id',(req,res)=>{
+  var id= req.params.id;
+  if(!ObjectID.isValid(id)){
+      console.log('haha');
+    return  res.status(400).send();
+
+  }
+  Todo.findByIdAndRemove(id).then((result)=>{
+    if(!result){
+      res.send('delete unsuccess')
+    }
+    res.send('delete successful');
+  })
+
 })
 
 app.get('/todos/:id',(req,res)=>{
@@ -43,7 +62,7 @@ app.get('/todos/:id',(req,res)=>{
 
 });
 
-app.listen(3000,()=>{
+app.listen(port,()=>{
   console.log('starting app');
 })
 module.exports={
