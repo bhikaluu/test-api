@@ -1,8 +1,14 @@
 var mongoose = require('mongoose');
 
-var User =mongoose.model('User',{
-  name:String,
-  age:Number
+var User =mongoose.model('user',{
+
+  email:{
+    type:String,
+    required:true,
+    trim:true
+
+  }
+
 })
 module.exports={
   User

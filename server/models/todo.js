@@ -8,6 +8,11 @@ var Todo = mongoose.model('Todo',{
      type:Boolean,
      default:false
    }
+   ,
+   completedAt:{
+     type:String,
+     default:null
+   }
 })
 module.exports={
   Todo
